@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block title %}{{ prod.date }}{% endblock %}
+
+<!-- prettier-ignore -->
+{%block content %}
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h3>Détails de la prod</h3>
+<div class="d-flex d-flex-inline">
+  <span class="pe-2">Date:</span>
+  <h5>{{ prod.date|title }}</h5>
+</div>
+
+<div class="d-flex d-flex-inline">
+  <span class="pe-2">Boulanger:</span>
+  <h5>{{ prod.boulanger|title }}</h5>
+</div>
+<hr />
+<h3>Liste des four</h3>
+
+<!-- prettier-ignore -->
+<table class="table table-primary table-striped">
+    <tr>
+        <th>T80</th>
+        <th>Bucheron Nature</th>
+        <th>Bucheron Noix</th>
+        <th>Bucheron Rainsins Noisettes</th>
+        <th>Bucheron Multi Graines</th>
+        <th>Petit Epeautre</th>
+        <th>Riz Sarrasin</th>
+        <th>Brioches</th>
+        <th>Cookies</th>
+    </tr>
+    {% for elem in prod.data_set.all %}
+    <tr> 
+        <td>{{ elem.T80 }}</td>
+        <td>{{ elem.BuchNat }}</td>
+        <td>{{ elem.BuchNoix }}</td>
+        <td>{{ elem.BuchRN }}</td>
+        <td>{{ elem.BuchMG }}</td>
+        <td>{{ elem.PetEp }}</td>
+        <td>{{ elem.RizSar }}</td>
+        <td>{{ elem.Brioche }}</td>
+        <td>{{ elem.Cookies }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<div>
+  <a
+    href="{% url 'prod:prod_edit' pk=prod.pk %}"
+    role="button"
+    class="btn btn-primary col-3"
+    >Edition</a
+  >
+  <a
+    href="{% url 'prod:list_prod' %}"
+    role="button"
+    class="btn btn-success col-3"
+    >Générarer la fiche</a
+  >
+  <a
+    href="{% url 'prod:list_prod' %}"
+    role="button"
+    class="btn btn-secondary col-3"
+    >Toutes les prods</a
+  >
+</div>
+
+{% endblock content %}

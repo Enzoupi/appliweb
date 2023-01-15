@@ -1,0 +1,441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <!-- My custom CSS -->
+    <link rel="stylesheet" href="{% static 'prod.css' %}" />
+  </head>
+  <body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Crispy tags -->
+    {% load crispy_forms_tags %}
+    <!-- La barre de navigation -->
+    {% include "navbar.html"%}
+    <!-- Et des trucs de base ! -->
+    {% include "__base.html"%}
+
+    <!-- Une manièere très simple -->
+    <div class="container">
+      <div class="form-group">
+        <form class="" method="post" action="/prod">
+          {% csrf_token %} {{form.as_p}}
+          <input type="submit" value="Save" />
+        </form>
+      </div>
+    </div>
+
+    <!-- Version manuelle toute écrite 
+    <div class="container">
+      <form class="form-contact" action="" method="POST">
+        {% csrf_token %}
+
+        <div class="col-2">
+          <label for="validationCustom01" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="id_{{form.date.name}}"
+            value="{{form.date.value}}"
+            onchange="handlerDateChange(event);"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+
+        <div class="row">
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.T80.name}}">
+                  {{form.T80.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.T80.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.BuchNat.name}}">
+                  {{form.BuchNat.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.BuchNat.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.BuchMG.name}}">
+                  {{form.BuchMG.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.BuchMG.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.BuchRN.name}}">
+                  {{form.BuchRN.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.BuchRN.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.BuchNoix.name}}">
+                  {{form.BuchNoix.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.BuchNoix.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-2">
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.RizSar.name}}">
+                  {{form.RizSar.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.RizSar.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="id_{{form.PetEp.name}}">
+                  {{form.PetEp.name}}
+                </div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="kg"
+                aria-label="{{form.PetEp.name}}"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col-2">
+        <button class="btn btn-primary" type="submit">Enregistrer !</button>
+      </div>
+    </div>
+    -->
+
+    <!-- Version VS code 
+    <div class="container">
+      <form class="row ml-0">
+        <div class="col-2">
+          <label for="validationCustom01" class="form-label">Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="dateInput"
+            value="Mark"
+            onchange="handlerDateChange(event);"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+      </form>
+    </div>
+
+    <div class="container" id="allFours">
+      <div class="container mt-5" id="Four1_container">
+        <div class="row">
+          <div class="col-3">
+            <h2 id="fourNum">Four 1</h2>
+          </div>
+          <div class="col-2">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <div class="input-group-text" id="btnGroupAddon">Levain</div>
+              </div>
+              <input
+                type="float"
+                class="form-control"
+                placeholder="%"
+                aria-label="Levain F1"
+                aria-describedby="btnGroupAddon"
+              />
+            </div>
+          </div>
+        </div>
+
+        <form class="form-group row" novalidate>
+          <div class="form-row mt-2">
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Froment T80
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Froment T80"
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Bûch. Nature
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Bûch. Nat."
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Bûch. Nature
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Bûch. Nat."
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Bûch. Graines
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Bûch. Graines"
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Bûch. R. N.
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Bûch. R. N."
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row mt-2">
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Riz Sarrasin
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Bûch. R. N."
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Petit Ep.
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Petit Ep."
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">Brioche</div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Brioches"
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">Cookies</div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="Qtt"
+                  aria-label="Cookies"
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <div class="input-group-text" id="btnGroupAddon">
+                    Pain apéro
+                  </div>
+                </div>
+                <input
+                  type="float"
+                  class="form-control"
+                  placeholder="kg"
+                  aria-label="Pain apéro"
+                  aria-describedby="btnGroupAddon"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="w-100"></div>
+        </form>
+      </div>
+    </div>
+
+    <div class="container mt-4">
+      <div class="form-group row" id="submit_button">
+        <div class="col-2">
+          <button class="btn btn-primary" type="submit" id="AddFour">
+            Ajouter un four !
+          </button>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary" type="submit">
+            Générer la fiche prod' !
+          </button>
+        </div>
+      </div>
+    </div>
+    -->
+
+    {% load static %} {% block scripts %}
+    <script src="{% static 'prod.js' %}"></script>
+    {% endblock %}
+  </body>
+</html>

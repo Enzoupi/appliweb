@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block title %}Productions{% endblock %}
+
+<!-- prettier-ignore -->
+{% block content %}
+
+<h1 class="h3">Productions</h1>
+
+{% if prod_list %}
+
+<ul class="list-group">
+  {% for prod in prod_list %}
+  <li class="list-group-item">
+    <a class="text-reset" href="{{ prod.get_absolute_url }}"
+      >{{ prod.date }} {{ prod.boulanger }}</a
+    >
+  </li>
+  {% endfor %}
+</ul>
+
+{% else %}
+
+<p>There are no prod to display.</p>
+
+{% endif %}
+
+<p class="pt-2">
+  <a href="{% url 'prod:home' %}" role="button" class="btn btn-secondary w-100"
+    >Cancel</a
+  >
+</p>
+
+{% endblock content %}

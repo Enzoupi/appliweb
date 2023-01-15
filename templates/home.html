@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {% block title %}Gestion des productions {% endblock%}
+{% block content %}
+
+<h3>Productions</h3>
+<a
+  href="{% url 'prod:list_prod' %}"
+  role="button"
+  class="btn btn-primary w-100 mb-2"
+  >Toutes les prods !</a
+>
+<a
+  href="{% url 'prod:add_prod' %}"
+  role="button"
+  class="btn btn-secondary w-100"
+  >Ajouter une prod !</a
+>
+
+{% endblock content %}

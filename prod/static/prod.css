@@ -1,0 +1,13 @@
+#submit_button {
+    margin-top: 500 px;
+    margin-bottom: 100 px;
+    background-color: None;
+}
+
+body { padding-top: 70px;
+    background-color: aliceblue;
+}
+
+.asteriskField {
+    display: none;
+}
