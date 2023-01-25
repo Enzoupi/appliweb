@@ -8,6 +8,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from .models import Data, Prod
 from .forms import ProdFormset, ProdFormSetHelper
+from .recettes import formatteur_de_recettes
 #from .forms import DataForm
 
 
@@ -73,5 +74,27 @@ class ProdEditView(SingleObjectMixin, FormView):
         return self.render_to_response(context)
 
 
+class FicheProdView(DetailView):
+    model = Prod
+    template_name = 'ficheprod.html'
     
-
+    def get_context_data(self, **kwargs):
+        # Get original context
+        context = super(FicheProdView, self).get_context_data(**kwargs)
+        
+        # Make my custom context.
+        ## First get the Fours related to that prod
+        QS = Data.objects.filter(prod_id__pk=self.object.pk)
+        
+        ## Pour chaque, obtenir les recettes
+        recettes = []
+        for four in QS:
+            print("Four ", four)
+            rcp = formatteur_de_recettes(four)
+            recettes.append(rcp)
+        context = {"prod":list(QS), "recettes":recettes}
+        print(f"context = {context}")
+        return context
+    
+    def get_success_url(self):
+        return reverse('prod:fiche_prod', kwargs={'pk': self.object.pk}, )

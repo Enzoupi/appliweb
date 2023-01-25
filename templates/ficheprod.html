@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+<!-- prettier-ignore -->
+{% load crispy_forms_tags %} {% load static %} {% load extra_filters %}
+<!-- prettier-ignore -->
+{% block title %} FicheProd'{% endblock %}
+
+
+
+
+{% block content %}
+
+<h3>Fiche prod du {{ prod.0.prod_id.date|date:_("d b Y") }}</h3>
+
+<div class="container">
+  <div class="row">
+    {% for elem in recettes %} {% with index=forloop.counter0 %}
+    <div class="col-{{ elem.headers|length }}">
+      <h4>Four {{ forloop.counter }}</h4>
+
+      <table class="table">
+        <thead>
+          <tr>
+            {% for item in elem.headers %} {% if forloop.counter0 == 0 %}
+            <th class="col-md-1">{{ item }}</th>
+            {% else %}
+            <th class="col-md-1">
+              {{ item }} {{ prod|return_item:index|get_attr:item }} kg
+            </th>
+            {% endif %} {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, row in elem.rows.items %}
+          <tr>
+            <th scope="row" class="col-md-1">{{ key }}</th>
+            {% for value in row %}
+            <td class="col-md-1">{{ value }}</td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endwith %} {% endfor %}
+  </div>
+</div>
+
+<div id="button_div">
+  <a
+    href="{% url 'prod:list_prod' %}"
+    role="button"
+    class="btn btn-primary col-3"
+    >Retour à la liste de prod</a
+  >
+  <a
+    href="{% url 'prod:prod_detail' pk=prod.0.prod_id.pk %}"
+    role="button"
+    class="btn btn-primary col-3"
+    >Editer la prod</a
+  >
+</div>
+{% endblock content %}
