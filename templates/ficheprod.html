@@ -17,7 +17,7 @@
     <div class="col-{{ elem.headers|length }}">
       <h4>Four {{ forloop.counter }}</h4>
 
-      <table class="table">
+      <table class="table table-striped">
         <thead>
           <tr>
             {% for item in elem.headers %} {% if forloop.counter0 == 0 %}
@@ -38,6 +38,15 @@
             {% endfor %}
           </tr>
           {% endfor %}
+
+          <tr>
+            <th class="table-warning">Total</th>
+            {% for item in elem.totals %}
+            <!-- prettier-ignore -->
+            <td class="table-warning">{{ item }} kg</td>
+
+            {% endfor %}
+          </tr>
         </tbody>
       </table>
     </div>

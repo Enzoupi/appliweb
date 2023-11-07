@@ -1,0 +1,17 @@
+<!-- prettier-ignore -->
+{% extends 'base.html' %} {% block title %} Accueil
+{% endblock%} {% block content %}
+
+<h3>Direction les productions !</h3>
+<div class="row">
+  <div class="col-3">
+    <a
+      href="{% url 'prod:home' %}"
+      role="button"
+      class="btn btn-primary w-100 mb-2"
+      >Gestion des prods ! !</a
+    >
+  </div>
+</div>
+
+{% endblock content %}

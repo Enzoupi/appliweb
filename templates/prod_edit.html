@@ -1,34 +1,75 @@
-{% extends 'base.html' %} {% load crispy_forms_tags %}
-<!-- prettier-ignore -->
+{% extends "base.html" %}
+
 {% block title %}
-Editions des fournées du {{ prod.name }}
+  Editions des fournées du {{ prod.name }}
 {% endblock %}
-<!-- prettier-ignore -->
 
 {% block content %}
-<!-- prettier-ignore -->
+Test
+<p>{{ form.1 }}</p>
+<p>{{ form.2 }}</p>
 
-<div class="container col-12">
-    <form action="" method="post">
-        {% csrf_token %}
-        {%  crispy form helper %}
-        <p>
-            <button
-              type="submit"
-              value="Update collection"
-              class="btn btn-primary w-100 mb-3"
-            >
-              Update Collection
-            </button>
-            <a
-              href="{{ prod.get_absolute_url  }}"
-              role="button"
-              class="btn btn-secondary w-100"
-              >Cancel</a
-            >
-          </p>
-        </form>
-    
+Test list
+{% for elm in form %}
+            <li> {{ elm.T80 }}</li>
+{% endfor %}
+
+Test super liste
+
+Labels
+{% for elm in form|slice:":1" %}
+<div class="row">
+    {%  for pain in elm %}
+    <div class="col-1">
+        {{pain.label}}
+      </div>
+    {% endfor %}
 </div>
+{% endfor %}
 
-{% endblock content %}
+Values
+{% for elm in form %}
+<div class="row">
+    {%  for pain in elm %}
+    <div class="col-1">
+        {{pain}}
+      </div>
+    {% endfor %}
+</div>
+{% endfor %}
+
+Not Test
+  <div class="container col-12">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.management_form }}
+      {{ form.non_field_errors }}
+
+      <div class="col-md-4 mt-3">
+        <label for="{{ form.field_name.id_for_label }}" class="form-label">Field Label:</label>
+        {% with form.field_name as field %}
+          {{ field }}
+        {% endwith %}
+        {{ form.field_name.errors }}
+      </div>
+      
+      
+
+      <div class="row mb-3 mt-1">
+        {% for field in form %}
+          <div class="col-md-4 mt-3"
+            {{ field }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <p>
+        <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
+          Update Prod
+        </button>
+        <a href="{{ prod.get_absolute_url }}" role="button" class="btn btn-secondary col-md-6">Cancel</a>
+      </p>
+    </form>
+  </div>
+</div>
+{% endblock %}

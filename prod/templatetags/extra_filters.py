@@ -13,4 +13,10 @@ def return_item(l, i):
 def get_attr(obj, attr_name):
     return getattr(obj, attr_name)
 
+@register.filter
+def extract_nth_values(dictionary, index):
+    return [val[index] for val in dictionary.values()]
 
+@register.filter
+def dict_sum(dictionary):
+    return sum(dictionary.values())

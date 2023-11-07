@@ -3,30 +3,64 @@
 <!-- prettier-ignore -->
 {% block content %}
 
-<h1 class="h3">Productions</h1>
+<h1 class="h3">Liste des productions</h1>
+
+<div id="searchbar_div">
+  <div class="container mb-2">
+    <div class="row">
+      <div class="col">
+        <div class="card card_body p-2">
+          <form method="get">
+            {{ prodFilter.form }}
+            <button class="btn btn-primary" type="submit">Filtrer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 {% if prod_list %}
-
 <ul class="list-group">
   {% for prod in prod_list %}
   <li class="list-group-item">
-    <a class="text-reset" href="{{ prod.get_absolute_url }}"
-      >{{ prod.date }} {{ prod.boulanger }}</a
-    >
+    <div class="row">
+      <div class="col-2">
+        <a class="text-reset" href="{{ prod.get_absolute_url }}"
+          >{{ prod.date }}
+        </a>
+      </div>
+
+      <div class="col-2">{{ prod.boulanger }}</div>
+
+      <div class="col-7">
+        {% for data in prod.data_set.all%}
+        <strong>F{{forloop.counter}}</strong> {{data.total}} kg {% endfor %}
+      </div>
+
+      <div class="col-1 text-end">{{ prod.total_sum}} kg</div>
+    </div>
   </li>
   {% endfor %}
 </ul>
-
 {% else %}
-
 <p>There are no prod to display.</p>
-
 {% endif %}
 
-<p class="pt-2">
-  <a href="{% url 'prod:home' %}" role="button" class="btn btn-secondary w-100"
-    >Cancel</a
-  >
-</p>
+<div class="row mt-4" id="button-row">
+  <div class="col-3">
+    <a
+      href="{% url 'prod:add_prod' %}"
+      role="button"
+      class="btn btn-success w-100"
+      >Nouvelle prod</a
+    >
+  </div>
+  <div class="col-3">
+    <a href="{% url 'prod:home' %}" role="button" class="btn btn-primary w-100"
+      >Accueil</a
+    >
+  </div>
+</div>
 
 {% endblock content %}
