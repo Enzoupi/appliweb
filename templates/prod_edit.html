@@ -6,17 +6,6 @@
 
 {% block content %}
 
-Test
-<p>{{ form.1 }}</p>
-<p>{{ form.2 }}</p>
-
-Test list
-{% for elm in form %}
-            <li> {{ elm.T80 }}</li>
-{% endfor %}
-
-
-Test an actual form
 <div class="container col-12">
     <form method="post">
       {% csrf_token %}
@@ -24,42 +13,30 @@ Test an actual form
       {{ form.non_field_errors }}
 
       <!-- Headers -->
-    <div class="row justify-content-center align-items-center g-2">
-        {% for elm in form|slice:":1" %}
-        <div class="row">
-            {%  for pain in elm %}
-                {% if pain.label == 'Prod id' %}
-                <div class="col-1"></div>
-                {% elif pain.label == 'Id' %}
-                {% else %}
-                <div class="col-1">
-                    {{pain.label}}
-                </div>
-                {% endif %}
-            {% endfor %}
-    </div>
-        {% endfor %}
-
-    <!-- Values -->
-    <div class="row justify-content-center align-items-center g-2">
-        {% for elm in form %}
-        <div class="row mt-2">
-
-            {%  for pain in elm %}
-            {% if pain.label == 'Prod id' %}
-                <div class="col-1">
-                   
-                </div>
-            {% endif%}
-
-                <div class="col-1">
-                {{pain}}
-                </div>
-            {% endfor %}
-    </div>
+<div class="row justify-content-center align-items-center g-2">
+    {% for elm in form|slice:":1" %}
+    <div class="row">
+        {% for pain in elm %}
+            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %} {% if pain.label == 'Id' %}invisible{% endif %}">
+                {{ pain.label }}
+            </div>
         {% endfor %}
     </div>
+    {% endfor %}
+</div>
 
+<!-- Values -->
+<div class="row justify-content-center align-items-center g-2">
+    {% for elm in form %}
+    <div class="row mt-2">
+        {% for pain in elm %}
+            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %}">
+                {{ pain }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
 
       <p>
         <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
@@ -70,4 +47,18 @@ Test an actual form
     </form>
   </div>
 </div>
+
+
+<div class="navbar fixed-bottom navbar-light bg-light">
+    <div class="container">
+        {% for element_name, element_sum in sums %}
+            <span class="mx-2">
+                <strong>{{ element_name }}: </strong> {{ element_sum }}
+            </span>
+        {% endfor %}
+    </div>
+</div>
+  
 {% endblock %}
+
+  

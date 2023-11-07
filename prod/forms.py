@@ -27,6 +27,17 @@ class ProdForm(forms.ModelForm):
             "BuchMG": "B. Graines",
             "BuchRN": "B. R.N.",
         }
+        widgets = {
+            "T80": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "BuchNat": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "BuchNoix": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "BuchMG": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "BuchRN": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "RizSar": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "PetEp": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "Brioche": forms.TextInput(attrs={"class": "form-control w-100"}),
+            "Cookies": forms.TextInput(attrs={"class": "form-control w-100"}),
+        }
 
     def clean(self):
         cleaned_data = super().clean()

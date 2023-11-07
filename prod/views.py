@@ -6,11 +6,12 @@ from django.views.generic import (
     FormView,
 )
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic.detail import SingleObjectMixin
+from django.db.models import Sum
 
 from .models import Data, Prod
 from .forms import ProdFormset, ProdFormSetHelper
@@ -53,9 +54,26 @@ class ProdEditView(SingleObjectMixin, FormView):
     model = Prod
     template_name = "prod_edit.html"
     extra_context = {"helper": ProdFormSetHelper}
+    data_entries = None
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object(queryset=Prod.objects.all())
+
+        # Retrieve the related Data entries for this Prod
+        self.data_entries = self.object.data_set.all()
+
+        # Calculate the sums of each element
+        sums = [
+            ("T80", self.data_entries.aggregate(Sum("T80"))["T80__sum"]),
+            ("BuchNat", self.data_entries.aggregate(Sum("BuchNat"))["BuchNat__sum"]),
+            ("BuchMG", self.data_entries.aggregate(Sum("BuchMG"))["BuchMG__sum"]),
+            ("BuchRN", self.data_entries.aggregate(Sum("BuchRN"))["BuchRN__sum"]),
+            ("BuchNoix", self.data_entries.aggregate(Sum("BuchNoix"))["BuchNoix__sum"]),
+            # Add more elements as needed
+        ]
+
+        # Include sums in extra context
+        self.extra_context["sums"] = sums
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -66,8 +84,6 @@ class ProdEditView(SingleObjectMixin, FormView):
     def get_form(self, form_class=None):
         formset = ProdFormset(**self.get_form_kwargs(), instance=self.object)
         return formset
-        # before sum edit
-        # return ProdFormset(**self.get_form_kwargs(), instance=self.object)
 
     def form_valid(self, form):
         if form.is_valid():
