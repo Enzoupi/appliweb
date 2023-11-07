@@ -49,16 +49,60 @@
 </div>
 
 
+
+<!-- Navbar directed to JS -->
 <div class="navbar fixed-bottom navbar-light bg-light">
     <div class="container">
-        {% for element_name, element_sum in sums %}
-            <span class="mx-2">
-                <strong>{{ element_name }}: </strong> {{ element_sum }}
-            </span>
-        {% endfor %}
+        <span id="sum-T80"> T80: 0.0</span>
+        <span id="sum-BuchNat"> Campagne: 0.0</span>
+        <span id="sum-BuchNoix"> Noix: 0.0</span>
+        <span id="sum-BuchMG"> MultiGraines: 0.0</span>
+        <span id="sum-PetEp"> Petit Epeautre: 0.0</span>
+        <span id="sum-RizSar"> RizSar: 0.0</span>
+        <span id="sum-Brioche"> Brioche: 0.0</span>
+        <span id="sum-Cookies"> Cookies: 0.0</span>
+        <!-- Add similar spans for other elements -->
     </div>
 </div>
+
+<script>
+    // Initialize sums for each element type
+    const sums = {
+        T80: 0,
+        BuchNat: 0,
+        PetEp: 0,
+        RizSar: 0,
+        BuchNoix:0,
+        PetEp:0,
+        BuchMG:0,
+        Brioche:0,
+        Cookies:0,
+        // Add similar entries for other types
+    };
+
+    // Function to update sums
+    function updateSums() {
+        console.log("Updating sums");
+
+        // Loop over element types and calculate sums
+        for (const type in sums) {
+            const inputs = document.querySelectorAll(`.${type}-input`);
+            sums[type] = Array.from(inputs).reduce((sum, input) => sum + parseFloat(input.value || 0), 0);
+            document.getElementById(`sum-${type}`).textContent = `${type}: ${sums[type].toFixed(2)}`;
+        }
+    }
+
+    // Attach the updateSums function to input change events
+    document.addEventListener('change', function(event) {
+        if (event.target.classList.contains('form-control')) {
+            updateSums();
+        }
+    });
+
+    // Initial update
+    updateSums();
+</script>
   
 {% endblock %}
 
-  
+
