@@ -13,8 +13,11 @@
     />
     <!-- My CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'prod.css' %}" />
+
     <title>{% block title %}Homepage{% endblock %}</title>
+    {% block title2 %}Subtitle{% endblock %}
   </head>
+
   <body>
     <main>
       <div class="container">

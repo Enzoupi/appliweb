@@ -1,23 +1,37 @@
 {% extends "base.html" %}
 
-{% block title %}
-  Editions des fournées du {{ prod.name }}
+{% block title2 %}
+<div class="container-fluid text-center my-5">
+    <h2 class="display-4 mb-4">Prod Edit Comparison</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-primary mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title">En cours</h5>
+                </div>
+                <div class="card-body">
+                    <p class="lead">ID: {{ object.pk }}</p>
+                    <p class="lead">Date: {{ object.date }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-secondary mb-3">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="card-title">A comparer</h5>
+                </div>
+                <div class="card-body">
+                    <p class="lead">ID: {{ compare_prod.pk }}</p>
+                    <p class="lead">Date: {{ compare_prod.date }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
+
 {% block content %}
-
-
-<div class="container">
-
-    Original 
-    {{ object.pk }}    
-</div>
-
-<div class="container">
-    compared 
-    {{ compare_prod.pk }}
-    {{ compare_sums }}
-</div>
 
 <div class="container col-12 mt-3">
     <form method="post">
@@ -55,18 +69,12 @@
         <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
           Update Prod
         </button>
-        <button type="button" class="btn btn-primary col-md-6 mb-3 mt-3" onclick="compareProds()">
-            Compare Prod
-          </button>
         <a href="{{ prod.get_absolute_url }}" role="button" class="btn btn-secondary col-md-6">Cancel</a>
       </p>
     </form>
   </div>
 </div>
 
-
-
-  
 {% endblock %}
 
 
