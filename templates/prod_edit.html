@@ -5,6 +5,16 @@
 {% endblock %}
 
 {% block content %}
+{% load static %}
+
+<!-- Include the prod information as a JavaScript variable -->
+<script>
+    const prodData = {
+        pk: "{{ prod.pk }}",
+        name: "{{ prod.name }}",
+        // Add other fields as needed
+    };
+</script>
 
 <div class="container col-12">
     <form method="post">
@@ -84,61 +94,7 @@
     </div>
 </div>
 
-<script>
-    // Initialize sums for each element type
-    const sums = {
-        T80: 0,
-        BuchNat: 0,
-        PetEp: 0,
-        RizSar: 0,
-        BuchNoix:0,
-        PetEp:0,
-        BuchMG:0,
-        Brioche:0,
-        Cookies:0,
-        // Add similar entries for other types
-    };
-
-    // Function to update sums
-    function updateSums() {
-        console.log("Updating sums");
-
-        // Loop over element types and calculate sums
-        for (const type in sums) {
-            const inputs = document.querySelectorAll(`.${type}-input`);
-            sums[type] = Array.from(inputs).reduce((sum, input) => sum + parseFloat(input.value || 0), 0);
-            document.getElementById(`sum-${type}`).textContent = `${type}: ${sums[type].toFixed(2)}`;
-        }
-    }
-
-    // Attach the updateSums function to input change events
-    document.addEventListener('change', function(event) {
-        if (event.target.classList.contains('form-control')) {
-            updateSums();
-        }
-    });
-
-
-    function compareProds() {
-        // Get the selected Prod for comparison
-        const selectProd = 2;
-        const selectedProdId = 2;
-    
-        if (selectedProdId) {
-        console.log('True')
-          console.log(`{% url 'prod:prod_edit_compare' prod_id=prod.pk compare_id=2 %}`);
-          window.location.href = `{% url 'prod:prod_edit_compare' prod_id=prod.pk compare_id=3 %}`;
-        } else {
-            console.log('False')
-          alert('Please select a Prod for comparison.');
-        }
-      }
-
-    // Initial update
-    updateSums();
-
-</script>
-  
+<script src="{% static 'prod_edit.js' %}"></script>  
 {% endblock %}
 
 
