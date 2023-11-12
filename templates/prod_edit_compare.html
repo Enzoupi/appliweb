@@ -1,80 +1,31 @@
-{% extends "base.html" %}
-
-{% block title2 %}
+{% extends "base.html" %} {% block title2 %}
 <div class="container-fluid text-center my-5">
-    <h2 class="display-4 mb-4">Prod Edit Comparison</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card border-primary mb-3">
-                <div class="card-header bg-primary text-white">
-                    <h5 class="card-title">En cours</h5>
-                </div>
-                <div class="card-body">
-                    <p class="lead">ID: {{ object.pk }}</p>
-                    <p class="lead">Date: {{ object.date }}</p>
-                </div>
-            </div>
+  <h2 class="display-4 mb-4">Prod Edit Comparison</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-primary mb-3">
+        <div class="card-header bg-primary text-white">
+          <h5 class="card-title">En cours</h5>
         </div>
-        <div class="col-md-6">
-            <div class="card border-secondary mb-3">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="card-title">A comparer</h5>
-                </div>
-                <div class="card-body">
-                    <p class="lead">ID: {{ compare_prod.pk }}</p>
-                    <p class="lead">Date: {{ compare_prod.date }}</p>
-                </div>
-            </div>
+        <div class="card-body">
+          <p class="lead">ID: {{ object.pk }}</p>
+          <p class="lead">Date: {{ object.date }}</p>
         </div>
+      </div>
     </div>
-</div>
-{% endblock %}
-
-
-{% block content %}
-
-<div class="container col-12 mt-3">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.management_form }}
-      {{ form.non_field_errors }}
-
-      <!-- Headers -->
-<div class="row justify-content-center align-items-center g-2">
-    {% for elm in form|slice:":1" %}
-    <div class="row">
-        {% for pain in elm %}
-            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %} {% if pain.label == 'Id' %}invisible{% endif %}">
-                {{ pain.label }}
-            </div>
-        {% endfor %}
+    <div class="col-md-6">
+      <div class="card border-secondary mb-3">
+        <div class="card-header bg-secondary text-white">
+          <h5 class="card-title">A comparer</h5>
+        </div>
+        <div class="card-body">
+          <p class="lead">ID: {{ compare_prod.pk }}</p>
+          <p class="lead">Date: {{ compare_prod.date }}</p>
+        </div>
+      </div>
     </div>
-    {% endfor %}
-</div>
-
-<!-- Values -->
-<div class="row justify-content-center align-items-center g-2">
-    {% for elm in form %}
-    <div class="row mt-2">
-        {% for pain in elm %}
-            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %}">
-                {{ pain }}
-            </div>
-        {% endfor %}
-    </div>
-    {% endfor %}
-</div>
-
-      <p>
-        <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
-          Update Prod
-        </button>
-        <a href="{{ prod.get_absolute_url }}" role="button" class="btn btn-secondary col-md-6">Cancel</a>
-      </p>
-    </form>
   </div>
 </div>
-
-{% endblock %}
-
-
+{% endblock %} {% block content %}
+<!-- Add the form -->
+{% include "prod_edit__form.html" %} {% endblock %}
