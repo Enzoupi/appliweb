@@ -12,9 +12,11 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views.generic.detail import SingleObjectMixin
 from django.db.models import Sum
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
 from .models import Data, Prod
-from .forms import ProdFormset, ProdFormSetHelper
+from .forms import ProdForm, ProdFormset, ProdFormSetHelper
 from .recettes import formatteur_de_recettes
 from .filters import ProdFilter
 
@@ -62,18 +64,10 @@ class ProdEditView(SingleObjectMixin, FormView):
         # Retrieve the related Data entries for this Prod
         self.data_entries = self.object.data_set.all()
 
-        # Calculate the sums of each element
-        sums = [
-            ("T80", self.data_entries.aggregate(Sum("T80"))["T80__sum"]),
-            ("BuchNat", self.data_entries.aggregate(Sum("BuchNat"))["BuchNat__sum"]),
-            ("BuchMG", self.data_entries.aggregate(Sum("BuchMG"))["BuchMG__sum"]),
-            ("BuchRN", self.data_entries.aggregate(Sum("BuchRN"))["BuchRN__sum"]),
-            ("BuchNoix", self.data_entries.aggregate(Sum("BuchNoix"))["BuchNoix__sum"]),
-            # Add more elements as needed
-        ]
+        # Get the list of available Prods for the dropdown menu
+        available_prods = Prod.objects.exclude(pk=self.object.pk)
+        self.extra_context["availableProds"] = available_prods
 
-        # Include sums in extra context
-        self.extra_context["sums"] = sums
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -142,3 +136,26 @@ class FicheProdView(DetailView):
             "prod:fiche_prod",
             kwargs={"pk": self.object.pk},
         )
+
+
+class ProdEditCompareView(UpdateView):
+    model = Prod
+    form_class = ProdForm  # Replace with the actual form class you're using
+    template_name = "prod_edit_compare.html"
+    success_url = reverse_lazy("prod:prod_list")
+
+    def get_object(self, queryset=None):
+        # Retrieve the compare_id from the URL
+        compare_id = self.kwargs.get("compare_id")
+        # Return the compared prod based on compare_id
+        return get_object_or_404(Prod, pk=compare_id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add the original prod to the context (default key is 'object')
+        # Ensure that the original prod and compared prod are distinct
+        original_prod = get_object_or_404(Prod, pk=self.kwargs.get("prod_id"))
+        context["compare_prod"] = self.object
+        context["compare_sums"] = self.object.get_data_sums()
+        context["object"] = original_prod
+        return context

@@ -19,7 +19,8 @@ from pages.views import AccueilView
 from django.urls import include, path
 
 urlpatterns = [
-    path('', AccueilView.as_view(), name='accueil'),
-    path('prod/', include('prod.urls', namespace="prod")),
-    path('admin/', admin.site.urls),
+    path("", AccueilView.as_view(), name="accueil"),
+    path("prod/", include("prod.urls", namespace="prod")),
+    path("admin/", admin.site.urls),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]

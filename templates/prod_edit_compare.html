@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}
+  Editions des fournées du {{ prod.name }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+
+    Original 
+    {{ object.pk }}    
+</div>
+
+<div class="container">
+    compared 
+    {{ compare_prod.pk }}
+    {{ compare_sums }}
+</div>
+
+<div class="container col-12 mt-3">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.management_form }}
+      {{ form.non_field_errors }}
+
+      <!-- Headers -->
+<div class="row justify-content-center align-items-center g-2">
+    {% for elm in form|slice:":1" %}
+    <div class="row">
+        {% for pain in elm %}
+            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %} {% if pain.label == 'Id' %}invisible{% endif %}">
+                {{ pain.label }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Values -->
+<div class="row justify-content-center align-items-center g-2">
+    {% for elm in form %}
+    <div class="row mt-2">
+        {% for pain in elm %}
+            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %}">
+                {{ pain }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+
+      <p>
+        <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
+          Update Prod
+        </button>
+        <button type="button" class="btn btn-primary col-md-6 mb-3 mt-3" onclick="compareProds()">
+            Compare Prod
+          </button>
+        <a href="{{ prod.get_absolute_url }}" role="button" class="btn btn-secondary col-md-6">Cancel</a>
+      </p>
+    </form>
+  </div>
+</div>
+
+
+
+  
+{% endblock %}
+
+

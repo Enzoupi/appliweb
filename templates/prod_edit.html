@@ -38,6 +38,25 @@
     {% endfor %}
 </div>
 
+<div class="container" name="compare_container">
+    <div class="row justify-content-center align-items-center g-2 mt-3">
+        <label for="selectProd" class="col-md-2 col-form-label">Select Prod:</label>
+        <div class="col-md-4">
+            <select id="selectProd" class="form-select">
+                <!-- Add options dynamically based on your available Prods -->
+                {% for availableProd in availableProds %}
+                    <option value="{{ availableProd.pk }}">{{ availableProd.date }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    
+    <!-- Add this updated "Compare Prod" button with the dropdown menu -->
+    <button type="button" class="btn btn-primary col-md-6 mb-3 mt-3" onclick="compareProds()">
+        Compare Prod
+    </button>
+</div>
+
       <p>
         <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
           Update Prod
@@ -99,8 +118,25 @@
         }
     });
 
+
+    function compareProds() {
+        // Get the selected Prod for comparison
+        const selectProd = 2;
+        const selectedProdId = 2;
+    
+        if (selectedProdId) {
+        console.log('True')
+          console.log(`{% url 'prod:prod_edit_compare' prod_id=prod.pk compare_id=2 %}`);
+          window.location.href = `{% url 'prod:prod_edit_compare' prod_id=prod.pk compare_id=3 %}`;
+        } else {
+            console.log('False')
+          alert('Please select a Prod for comparison.');
+        }
+      }
+
     // Initial update
     updateSums();
+
 </script>
   
 {% endblock %}
