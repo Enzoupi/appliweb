@@ -27,6 +27,86 @@
   </div>
 </div>
 
-{% endblock %} {% block content %}
+{% endblock %} {% block content %} {% load static %}
+
 <!-- Add the form -->
-{% include "prod_edit__form.html" %} {% endblock %}
+{% include "prod_edit__form.html" %}
+
+<!--
+<div class="navbar fixed-bottom navbar-light bg-light">
+  <div class="container col-12">
+    <span id="sum-T80"> T80: 0.0</span>
+    <span id="sum-BuchNat"> Campagne: 0.0</span>
+    <span id="sum-BuchNoix"> Noix: 0.0</span>
+    <span id="sum-BuchMG"> MultiGraines: 0.0</span>
+    <span id="sum-PetEp"> Petit Epeautre: 0.0</span>
+    <span id="sum-RizSar"> RizSar: 0.0</span>
+    <span id="sum-Brioche"> Brioche: 0.0</span>
+    <span id="sum-Cookies"> Cookies: 0.0</span>
+  </div>
+
+  <div class="container col-12">
+    <span id="sum-T80"> T80: {{ compare_sums.T80 }}</span>
+    <span id="sum-BuchNat"> Campagne: {{ compare_sums.BuchNat }}</span>
+    <span id="sum-BuchNoix"> Noix: {{ compare_sums.BuchNoix }}</span>
+    <span id="sum-BuchMG"> MultiGraines: {{ compare_sums.BuchMG }}</span>
+    <span id="sum-PetEp"> Petit Epeautre: {{ compare_sums.PetEp }}</span>
+    <span id="sum-RizSar"> RizSar: {{ compare_sums.RizSar }}</span>
+    <span id="sum-Brioche"> Brioche: {{ compare_sums.Brioche }}</span>
+    <span id="sum-Cookies"> Cookies: {{ compare_sums.Cookies }}</span>
+  </div>
+</div>
+-->
+
+<div class="navbar fixed-bottom navbar-light bg-light">
+  <div class="container col-12">
+    <div class="row">
+      <div class="col-1">
+        <span id="sum-T80"> T80: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-BuchNat"> Campagne: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-BuchNoix"> Noix: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-BuchMG"> MultiGraines: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-PetEp"> Petit Epeautre: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-RizSar"> RizSar: 0.0</span>
+      </div>
+      <div class="col-1"></div>
+      <div class="col-1">
+        <span id="sum-Brioche"> Brioche: 0.0</span>
+      </div>
+      <div class="col-1">
+        <span id="sum-Cookies"> Cookies: 0.0</span>
+      </div>
+    </div>
+
+    <!--
+    <div class="row">
+      {% for field in fields %}
+      <div class="col-1">
+        <span id="sum-{{field}}"> {{ field }}: 0</span>
+      </div>
+      {% endfor %}
+    </div>
+    -->
+
+    <div class="row">
+      {% for key, value in compare_sums.items %}
+      <div class="col-1">
+        <span>{{ key }}: {{ value }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'prod_edit.js' %}"></script>
+{% endblock %}

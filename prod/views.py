@@ -144,18 +144,18 @@ class ProdEditCompareView(UpdateView):
     template_name = "prod_edit_compare.html"
 
     def get_object(self, queryset=None):
-        # Retrieve the compare_id from the URL
-        compare_id = self.kwargs.get("compare_id")
-        # Return the compared prod based on compare_id
-        return get_object_or_404(Prod, pk=compare_id)
+        # Retrieve the original object, I believe it is used in form
+        prod_id = self.kwargs.get("prod_id")
+        return get_object_or_404(Prod, pk=prod_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add the original prod to the context (default key is 'object')
         # Ensure that the original prod and compared prod are distinct
         original_prod = get_object_or_404(Prod, pk=self.kwargs.get("prod_id"))
-        context["compare_prod"] = self.object
-        context["compare_sums"] = self.object.get_data_sums()
+        compare_prod = get_object_or_404(Prod, pk=self.kwargs.get("compare_id"))
+        context["compare_prod"] = compare_prod
+        context["compare_sums"] = compare_prod.get_data_sums()
         context["fields"] = Data.types_de_pains()
         context["prod"] = original_prod
         return context
