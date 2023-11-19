@@ -5,17 +5,17 @@
       {{ form.non_field_errors }}
 
       <!-- Headers -->
-<div class="row justify-content-center align-items-center g-2">
-    {% for elm in form|slice:":1" %}
-    <div class="row">
-        {% for pain in elm %}
-            <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %} {% if pain.label == 'Id' %}invisible{% endif %}">
-                {{ pain.label }}
-            </div>
+    <div class="row justify-content-center align-items-center g-2">
+        {% for elm in form|slice:":1" %}
+        <div class="row">
+            {% for pain in elm %}
+                <div class="col-1 {% if pain.label == 'Prod id' %}invisible{% endif %} {% if pain.label == 'Id' %}invisible{% endif %}">
+                    {{ pain.label }}
+                </div>
+            {% endfor %}
+        </div>
         {% endfor %}
     </div>
-    {% endfor %}
-</div>
 
 <!-- Values -->
 <div class="row justify-content-center align-items-center g-2">
@@ -30,24 +30,7 @@
     {% endfor %}
 </div>
 
-<div class="container" name="compare_container">
-    <div class="row justify-content-center align-items-center g-2 mt-3">
-        <label for="selectProd" class="col-md-2 col-form-label">Select Prod:</label>
-        <div class="col-md-4">
-            <select id="selectProd" class="form-select">
-                <!-- Add options dynamically based on your available Prods -->
-                {% for availableProd in availableProds %}
-                    <option value="{{ availableProd.pk }}">{{ availableProd.date }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </div>
-    
-    <!-- Add this updated "Compare Prod" button with the dropdown menu -->
-    <button type="button" class="btn btn-primary col-md-6 mb-3 mt-3" onclick="compareProds()">
-        Compare Prod
-    </button>
-</div>
+
 
       <p>
         <button type="submit" class="btn btn-primary col-md-6 mb-3 mt-3">
@@ -55,6 +38,26 @@
         </button>
         <a href="{{ prod.get_absolute_url }}" role="button" class="btn btn-secondary col-md-6">Cancel</a>
       </p>
+
+    <div class="container" name="compare_container">
+        <div class="row justify-content-center align-items-center g-2 mt-3">
+            <label for="selectProd" class="col-md-2 col-form-label">Select Prod:</label>
+            <div class="col-md-4">
+                <select id="selectProd" class="form-select">
+                    <!-- Add options dynamically based on your available Prods -->
+                    {% for availableProd in availableProds %}
+                        <option value="{{ availableProd.pk }}">{{ availableProd.date }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <!-- Add this updated "Compare Prod" button with the dropdown menu -->
+        <button type="button" class="btn btn-primary col-md-6 mb-3 mt-3" onclick="compareProds()">
+            Compare Prod
+        </button>
+    </div>
+
     </form>
   </div>
 </div>

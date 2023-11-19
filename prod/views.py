@@ -157,5 +157,5 @@ class ProdEditCompareView(UpdateView):
         original_prod = get_object_or_404(Prod, pk=self.kwargs.get("prod_id"))
         context["compare_prod"] = self.object
         context["compare_sums"] = self.object.get_data_sums()
-        context["object"] = original_prod
+        context["prod"] = original_prod
         return context

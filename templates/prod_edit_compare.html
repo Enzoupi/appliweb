@@ -8,8 +8,8 @@
           <h5 class="card-title">En cours</h5>
         </div>
         <div class="card-body">
-          <p class="lead">ID: {{ object.pk }}</p>
-          <p class="lead">Date: {{ object.date }}</p>
+          <p class="lead">ID: {{ prod.pk }}</p>
+          <p class="lead">Date: {{ prod.date }}</p>
         </div>
       </div>
     </div>
@@ -26,6 +26,7 @@
     </div>
   </div>
 </div>
+
 {% endblock %} {% block content %}
 <!-- Add the form -->
 {% include "prod_edit__form.html" %} {% endblock %}
