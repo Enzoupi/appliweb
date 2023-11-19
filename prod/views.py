@@ -159,3 +159,7 @@ class ProdEditCompareView(UpdateView):
         context["compare_sums"] = self.object.get_data_sums()
         context["prod"] = original_prod
         return context
+
+    def get_form(self, form_class=None):
+        formset = ProdFormset(**self.get_form_kwargs())
+        return formset
