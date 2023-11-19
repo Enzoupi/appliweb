@@ -142,7 +142,6 @@ class ProdEditCompareView(UpdateView):
     model = Prod
     form_class = ProdForm  # Replace with the actual form class you're using
     template_name = "prod_edit_compare.html"
-    success_url = reverse_lazy("prod:prod_list")
 
     def get_object(self, queryset=None):
         # Retrieve the compare_id from the URL
@@ -159,6 +158,10 @@ class ProdEditCompareView(UpdateView):
         context["compare_sums"] = self.object.get_data_sums()
         context["prod"] = original_prod
         return context
+
+    def get_success_url(self):
+        original_prod = get_object_or_404(Prod, pk=self.kwargs.get("prod_id"))
+        return reverse("prod:prod_detail", kwargs={"pk": original_prod.pk})
 
     def get_form(self, form_class=None):
         formset = ProdFormset(**self.get_form_kwargs())
