@@ -102,7 +102,8 @@ class Data(models.Model):
         ]
         return non_zero_items
 
-    def types_de_pains(self):
+    @classmethod
+    def types_de_pains(cls):
         return [
             "T80",
             "BuchNat",
